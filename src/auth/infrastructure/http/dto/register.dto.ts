@@ -8,21 +8,22 @@ import {
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 
-function trimIfString(value: unknown): unknown {
-  return typeof value === 'string' ? value.trim() : value;
+function normalizeDisplayName(value: unknown): unknown {
+  if (typeof value !== 'string') return value;
+  return value.trim().toLowerCase();
 }
 
 export class RegisterDto {
-  @Transform(({ value }: { value: unknown }) => trimIfString(value))
+  @Transform(({ value }: { value: unknown }) => normalizeDisplayName(value))
   @IsString()
   @IsNotEmpty({ message: 'Username is required' })
   @MinLength(3, { message: 'Username must be at least 3 characters' })
   @MaxLength(50, {
     message: 'Username must be less than or equal to 50 characters',
   })
-  @Matches(/^[a-zA-Z0-9_-]+$/, {
+  @Matches(/^[a-z0-9_-]+$/, {
     message:
-      'Username may only contain letters, numbers, underscores and hyphens',
+      'Username may only contain lowercase letters, numbers, underscores and hyphens',
   })
   username!: string;
 

@@ -24,7 +24,7 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   register(@Body() dto: RegisterDto) {
     return this.registerUser.execute({
-      username: dto.username,
+      name: dto.username,
       email: dto.email,
       password: dto.password,
     });

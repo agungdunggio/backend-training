@@ -9,7 +9,9 @@ import type {
 export class JwtTokenIssuer implements ITokenIssuer {
   constructor(private readonly jwtService: JwtService) {}
 
-  signAccessToken(payload: AuthJwtPayload): string {
+  signAccessToken(
+    payload: AuthJwtPayload & { username: string},
+  ): string {
     return this.jwtService.sign({
       sub: payload.sub,
       email: payload.email,

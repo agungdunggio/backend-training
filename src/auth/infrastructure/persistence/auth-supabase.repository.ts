@@ -24,13 +24,13 @@ export class AuthSupabaseRepository implements IAuthRepository {
 
   async register(params: RegisterUserParams): Promise<AuthUser> {
     const client = this.supabase.getClient();
-    const { username, email, password } = params;
+    const { name, email, password } = params;
 
     const { error: createError } = await client.auth.admin.createUser({
       email,
       password,
-      email_confirm: false,
-      user_metadata: { username },
+      email_confirm: true,
+      user_metadata: { name },
     });
 
     if (createError) {
@@ -62,7 +62,7 @@ export class AuthSupabaseRepository implements IAuthRepository {
     return new AuthUser(
       signInData.user.id,
       signInData.user.email ?? email,
-      usernameFromUser(signInData.user) || username,
+      usernameFromUser(signInData.user) || name,
     );
   }
 
