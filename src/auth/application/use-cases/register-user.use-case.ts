@@ -3,6 +3,7 @@ import { AUTH_REPOSITORY, TOKEN_ISSUER } from '../../auth.tokens';
 import type { IAuthRepository } from '../../domain/repositories/i-auth.repository';
 import type { RegisterUserParams } from '../../domain/types/register-user.params';
 import type { ITokenIssuer } from '../../domain/services/i-token-issuer';
+import { LoginRegisterResponseParams } from 'src/auth/domain/types/login-register-response.parms';
 
 @Injectable()
 export class RegisterUserUseCase {
@@ -13,13 +14,13 @@ export class RegisterUserUseCase {
     private readonly tokenIssuer: ITokenIssuer,
   ) {}
 
-  async execute(params: RegisterUserParams): Promise<{ accessToken: string }> {
+  async execute(params: RegisterUserParams): Promise<LoginRegisterResponseParams> {
     const user = await this.authRepository.register(params);
     const accessToken = this.tokenIssuer.signAccessToken({
       sub: user.id,
       email: user.email,
       username: user.username,
     });
-    return { accessToken };
+    return { userId: user.id ,username: user.username, email: user.email, accessToken };
   }
 }
