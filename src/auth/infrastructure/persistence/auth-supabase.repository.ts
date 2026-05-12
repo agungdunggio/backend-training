@@ -46,7 +46,6 @@ export class AuthSupabaseRepository implements IAuthRepository {
         signInError?.message ?? 'Gagal membuka sesi setelah pendaftaran',
       );
     }
-
     return new AuthUser(signInData.user.id, signInData.user.email ?? email);
   }
 
