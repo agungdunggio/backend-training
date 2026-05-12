@@ -1,6 +1,7 @@
 import type { AuthUser } from '../entities/auth-user.entity';
+import type { RegisterUserParams } from '../types/register-user.params';
 
 export interface IAuthRepository {
-  register(email: string, password: string): Promise<AuthUser>;
+  register(params: RegisterUserParams): Promise<AuthUser>;
   login(email: string, password: string): Promise<AuthUser>;
 }

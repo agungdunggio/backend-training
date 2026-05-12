@@ -13,6 +13,7 @@ export class JwtTokenIssuer implements ITokenIssuer {
     return this.jwtService.sign({
       sub: payload.sub,
       email: payload.email,
+      username: payload.username,
     });
   }
 }

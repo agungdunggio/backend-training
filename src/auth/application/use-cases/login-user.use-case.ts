@@ -20,6 +20,7 @@ export class LoginUserUseCase {
     const accessToken = this.tokenIssuer.signAccessToken({
       sub: user.id,
       email: user.email,
+      username: user.username,
     });
     return { accessToken };
   }

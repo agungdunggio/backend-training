@@ -7,6 +7,7 @@ import type { AuthJwtPayload } from '../../domain/services/i-token-issuer';
 export type JwtValidatedUser = {
   userId: string;
   email: string;
+  username: string;
 };
 
 @Injectable()
@@ -23,6 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     return {
       userId: payload.sub,
       email: payload.email,
+      username: payload.username ?? '',
     };
   }
 }
